@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../core/components/app_button.dart';
+import '../../../core/components/button/text_button_component.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -32,9 +32,9 @@ class OnboardingPage extends GetView<OnboardingController> {
                   itemBuilder: (ctx, i) {
                     final slide = controller.slides[i];
                     return SlideItem(
-                      title: slide['title']!,
-                      description: slide['desc']!,
-                      imagePath: slide['img']!,
+                      title: slide.name!,
+                      description: slide.subname!,
+                      imagePath: slide.body1!,
                     );
                   },
                 ),
@@ -75,7 +75,7 @@ class OnboardingPage extends GetView<OnboardingController> {
               alignment: Alignment.center,
               children: [
                 Image.asset(AppImages.onboarding_ellipse2),
-                Obx(() => AppButtonComponent(
+                Obx(() => TextButtonComponent(
                       onPressed: () => controller.nextPage(controller.pageController),
                       title: controller.isLastPage.value ? AppStrings.getstartedButton : AppStrings.nextButton,
                     )),

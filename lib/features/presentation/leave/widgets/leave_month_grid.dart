@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/components/app_monthGridView.dart';
-import '../../../../core/components/app_sectionHeader.dart';
+import '../../../../core/components/month_gridView_component.dart';
+import '../../../../core/components/section_header_component.dart';
 import '../../../data/models/attendance_model.dart';
 import '../leave_controller.dart';
 
@@ -18,15 +18,15 @@ class LeaveMonthGrid extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SectionHeader(title: "Chọn ngày muốn nghỉ",actionText: "Tháng",),
+          SectionHeaderComponent(title: "Chọn ngày muốn nghỉ",actionText: "Tháng",),
           SizedBox(height: 20,),
           Expanded(
             child: MonthGridViewComponent(
               initialSelectedDay: DateTime.now(),
               events: {
-                "2025-09-10": AttendanceStatus.full,
-                "2025-09-15": AttendanceStatus.missing,
-                "2025-09-22": AttendanceStatus.lateOrEarly,
+                "2025-10-10": AttendanceStatus.full,
+                "2025-10-15": AttendanceStatus.missing,
+                "2025-10-22": AttendanceStatus.lateOrEarly,
               },
               onDaySelected: (day) {
                 // Khi user chọn ngày ở grid -> sử dụng LeaveController để chuyển view

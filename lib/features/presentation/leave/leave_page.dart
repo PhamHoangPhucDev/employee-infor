@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import '../../../core/components/app_appBar.dart';
+import '../../../core/components/appBar_component.dart';
 import '../../../core/constants/app_strings.dart';
 import '../attendance/attendance_controller.dart';
 import 'leave_controller.dart';

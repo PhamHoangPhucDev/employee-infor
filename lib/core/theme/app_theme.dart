@@ -11,5 +11,23 @@ class AppTheme {
       displayLarge: AppTypography.display(),
       bodyLarge: AppTypography.headline(),
     ),
+    
+    useMaterial3: true,
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return AppColors.background; // khi bật
+        }
+        return AppColors.background; // khi tắt
+      }),
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return AppColors.primary; // track khi bật
+        }
+        return AppColors.buttonLight; // track khi tắt
+      }),
+      // xoá viền mặc định khi tắt
+      trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+    ),
   );
 }

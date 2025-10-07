@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 
-class AppTextfieldComponent extends StatefulWidget {
-  AppTextfieldComponent({super.key,required this.label,required this.controller,this.hintText="Input text",this.isPassword = false,this.maxLines});
+class TextFieldComponent extends StatefulWidget {
+  TextFieldComponent({super.key,required this.label,required this.controller,this.hintText="Nhập giá trị",this.isPassword = false,this.maxLines});
   final String label;
   final String hintText;
   final TextEditingController controller;
@@ -12,10 +13,10 @@ class AppTextfieldComponent extends StatefulWidget {
   final int? maxLines;
 
   @override
-  State<AppTextfieldComponent> createState() => _AppTextfieldComponentState();
+  State<TextFieldComponent> createState() => _TextFieldComponentState();
 }
 
-class _AppTextfieldComponentState extends State<AppTextfieldComponent> {
+class _TextFieldComponentState extends State<TextFieldComponent> {
   bool _obscureText = true;
 
   @override
@@ -56,8 +57,8 @@ class _AppTextfieldComponentState extends State<AppTextfieldComponent> {
                   _obscureText = !_obscureText;
                 });
               },
-              icon: Icon(
-                _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+              icon: HugeIcon(
+                icon: _obscureText ? HugeIcons.strokeRoundedViewOff : HugeIcons.strokeRoundedView,
                 color: AppColors.primary,
               ),
             ):null,

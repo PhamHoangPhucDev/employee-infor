@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/components/app_horizontalCalendar.dart';
+import '../../../../core/components/horizontal_calendar_component.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../data/models/attendance_model.dart';
 import '../leave_controller.dart';
@@ -22,7 +22,7 @@ class LeaveHorizontal extends StatelessWidget {
       children: [
         SizedBox(
           height: 90,
-          child: AppHorizontalCalendar(
+          child: HorizontalCalendarComponent(
             events: {
               "2025-09-10": AttendanceStatus.full,
               "2025-09-15": AttendanceStatus.missing,

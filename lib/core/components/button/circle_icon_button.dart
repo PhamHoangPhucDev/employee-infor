@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
 
-import '../theme/app_colors.dart';
+import '../../theme/app_colors.dart';
 
-class AppCircleIconButton extends StatelessWidget {
+class CircleIconButton extends StatelessWidget {
   final List<List<dynamic>> icon;
-  final double size; // đường kính button
   final double iconSize;
+  final double? sizeCircle;
   final Color backgroundColor;
   final Color iconColor;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
-  const AppCircleIconButton({
+  const CircleIconButton({
     super.key,
     required this.icon,
-    required this.onPressed,
-    this.size = 22,               // mặc định 27x27
-    this.iconSize = 16,           // mặc định icon 15
+    this.onPressed,
+    this.iconSize = 16,// mặc định icon 16
+    this.sizeCircle,
     this.backgroundColor = AppColors.backgroundInput,
     this.iconColor = AppColors.text,
   });
@@ -25,10 +25,10 @@ class AppCircleIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: size.sp,
-      height: size.sp,
+      width: sizeCircle ?? iconSize.sp + 13.sp,
+      height: sizeCircle ?? iconSize.sp + 13.sp,
       child: TextButton(
-        onPressed: onPressed,
+        onPressed: onPressed??(){},
         style: TextButton.styleFrom(
           backgroundColor: backgroundColor,
           shape: const CircleBorder(),

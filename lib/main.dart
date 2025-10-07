@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -8,8 +11,9 @@ import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_strings.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");   // Load key file .env
   // GetStorage được init trong AppBindings via putAsync, nhưng để đảm bảo có sẵn thì init trực tiếp:
   // await GetStorage.init(); // optional because AppBindings putAsync cũng init
   runApp(const EmployeePortalApp());

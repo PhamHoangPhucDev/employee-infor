@@ -12,18 +12,18 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
 
    Future<void> login(String email, String password) async {
-    try {
-      isLoading.value = true;
-      final user = await repository.login(email.trim(), password.trim());
-      if (user != null) {
-        await authService.saveUser(user);
+    // try {
+    //   isLoading.value = true;
+    //   final user = await repository.login(email.trim(), password.trim());
+    //   if (user != null) {
+    //     await authService.saveUser(user);
         Get.offAllNamed(AppRoutes.home);
-      } else {
-        Get.snackbar('Lỗi', 'Email hoặc mật khẩu không đúng');
-      }
-    } finally {
-      isLoading.value = false;
-    }
+    //   } else {
+    //     Get.snackbar('Lỗi', 'Email hoặc mật khẩu không đúng');
+    //   }
+    // } finally {
+    //   isLoading.value = false;
+    // }
   }
 
   Future<void> logout() async {

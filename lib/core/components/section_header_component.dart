@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 
-class SectionHeader extends StatelessWidget {
+class SectionHeaderComponent extends StatelessWidget {
   final String title;
   final String actionText;
   final VoidCallback? onActionPressed;
   final Color color;
 
-  const SectionHeader({
+  SectionHeaderComponent({
     Key? key,
     required this.title,
     this.actionText = "Xem tất cả",

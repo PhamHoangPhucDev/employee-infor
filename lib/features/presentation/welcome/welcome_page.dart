@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import '../../../core/components/app_button.dart';
+import '../../../core/components/button/text_button_component.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/routes/app_routes.dart';
@@ -41,7 +41,7 @@ class WelcomePage extends GetView<WelcomeController> {
                     ),
                   ),
                   SizedBox(height: 40),
-                  AppButtonComponent(
+                  TextButtonComponent(
                     title: AppStrings.getstartedButton,
                     onPressed: () {
                       Get.offAllNamed(AppRoutes.onboarding);

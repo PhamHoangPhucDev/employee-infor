@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:sizer/sizer.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
@@ -22,12 +24,16 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
+      leadingWidth: 25.sp,
       leading: showBack
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back_ios_outlined,color: AppColors.textLight),
-              onPressed: () => Get.back(),
-            )
-          : null,
+          ? InkWell(
+            onTap: () => Get.back(),
+            child: HugeIcon(
+              icon: HugeIcons.strokeRoundedArrowLeft01,
+              color: AppColors.textLight,
+            ),
+          )
+          : SizedBox.shrink(),
       title: Text(
         title,
         style: AppTypography.subtitle(color: AppColors.textLight),

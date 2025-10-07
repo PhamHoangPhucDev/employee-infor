@@ -32,7 +32,12 @@ class IconTextButton extends StatelessWidget {
             color: AppColors.primary,
           ),
           SizedBox(height: 4),
-          Text(label, style: AppTypography.smallbody(color: color)),
+          Text(label, 
+            style: AppTypography.smallbody(color: color),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );

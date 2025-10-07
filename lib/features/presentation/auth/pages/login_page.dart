@@ -1,12 +1,12 @@
-import 'package:employee_infor/core/components/app_circleIconButton.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
-import '../../../../core/components/app_appBar.dart';
-import '../../../../core/components/app_button.dart';
-import '../../../../core/components/app_textField.dart';
+import '../../../../core/components/appBar_component.dart';
+import '../../../../core/components/button/text_button_component.dart';
+import '../../../../core/components/text_field_component.dart';
+import '../../../../core/components/button/circle_icon_button.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -35,14 +35,14 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 30),
           
-              AppTextfieldComponent(
+              TextFieldComponent(
                 label: "${AppStrings.emailLabel} hoặc ${AppStrings.mobileNumberLabel}",
                 hintText: "Nhập ${AppStrings.emailLabel} hoặc ${AppStrings.mobileNumberLabel}",
                 controller: emailCtrl,
               ),
               SizedBox(height: 20),
           
-              AppTextfieldComponent(
+              TextFieldComponent(
                 label: AppStrings.passwordLabel,
                 hintText: "Nhập ${AppStrings.passwordLabel}",
                 isPassword: true,
@@ -61,18 +61,17 @@ class LoginPage extends StatelessWidget {
           
               controller.isLoading.value
                 ? const CircularProgressIndicator()
-                : AppButtonComponent(
+                : TextButtonComponent(
                   title: AppStrings.loginButton,
                   onPressed: () => controller.login(emailCtrl.text, passCtrl.text),
                 ),
               SizedBox(height: 20,),
               Text('hoặc đăng nhập với',style: AppTypography.smallbody(),),
               SizedBox(height: 20,),
-              AppCircleIconButton(
+              CircleIconButton(
                 icon: HugeIcons.strokeRoundedFingerAccess, 
                 backgroundColor: AppColors.primary,
                 iconColor: AppColors.background,
-                size: 28,
                 iconSize: 22,
                 onPressed: (){ 
                   print("Đang quét dấu vân tay đăng nhập!");

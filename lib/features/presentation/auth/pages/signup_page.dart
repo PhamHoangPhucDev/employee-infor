@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-import '../../../../core/components/app_appBar.dart';
-import '../../../../core/components/app_button.dart';
-import '../../../../core/components/app_circleIconButton.dart';
-import '../../../../core/components/app_textField.dart';
+import '../../../../core/components/appBar_component.dart';
+import '../../../../core/components/button/text_button_component.dart';
+import '../../../../core/components/text_field_component.dart';
+import '../../../../core/components/button/circle_icon_button.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -33,14 +33,14 @@ class SignupPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              AppTextfieldComponent(
+              TextFieldComponent(
                 label: AppStrings.fullNameLabel,
                 hintText: "Nhập ${AppStrings.fullNameLabel}",
                 controller: fullnameCtrl,
               ),
               
               const SizedBox(height: 5),
-              AppTextfieldComponent(
+              TextFieldComponent(
                 label: AppStrings.passwordLabel,
                 hintText: "Nhập ${AppStrings.passwordLabel}",
                 isPassword: true,
@@ -48,21 +48,21 @@ class SignupPage extends StatelessWidget {
               ),
           
               const SizedBox(height: 5),
-              AppTextfieldComponent(
+              TextFieldComponent(
                 label: AppStrings.emailLabel,
                 hintText: "Nhập ${AppStrings.emailLabel}",
                 controller: emailCtrl,
               ),
           
               const SizedBox(height: 5),
-              AppTextfieldComponent(
+              TextFieldComponent(
                 label: AppStrings.mobileNumberLabel,
                 hintText: "Nhập ${AppStrings.mobileNumberLabel}",
                 controller: mobileNumberCtrl,
               ),
           
               const SizedBox(height: 5),
-              AppTextfieldComponent(
+              TextFieldComponent(
                 label: AppStrings.birthdayLabel,
                 hintText: "DD/MM/YYYY",
                 controller: birthdayCtrl,
@@ -100,18 +100,17 @@ class SignupPage extends StatelessWidget {
           
               controller.isLoading.value
                 ? const CircularProgressIndicator()
-                : AppButtonComponent(
+                : TextButtonComponent(
                   title: AppStrings.signupButton,
                   onPressed: () => controller.login(emailCtrl.text, passCtrl.text),
                 ),
               SizedBox(height: 15,),
               Text('hoặc đăng ký với',style: AppTypography.smallbody()),
               SizedBox(height: 15,),
-              AppCircleIconButton(
+              CircleIconButton(
                 icon: HugeIcons.strokeRoundedFingerAccess, 
                 backgroundColor: AppColors.primary,
                 iconColor: AppColors.background,
-                size: 28,
                 iconSize: 22,
                 onPressed: (){ 
                   print("Đang quét dấu vân tay đăng nhập!");

@@ -20,20 +20,34 @@ class AppStrings {
   static const String emailLabel = "Email";
   static const String mobileNumberLabel = "Số điện thoại";
   static const String birthdayLabel = "Ngày sinh";
-  static const String setPasswordLabel = "Đặt mật khẩu";
+  static const String oldPasswordLabel = "Mật khẩu cũ";
+  static const String newPasswordLabel = "Mật khẩu mới";
   static const String confirmPasswordLabel = "Xác nhận mật khẩu";
-  static const String createNewPasswordButton = "Tạo mật khẩu mới";
 
-  static const String employeesTitle = "D.s Nhân Viên";
+  static const String employeesTitle = "Danh Sách Nhân Viên";
   static const String infoEmployeeTitle = "Thông Tin Nhân Viên";
 
   static const String attendanceTitle = "Chấm Công";
 
   static const String leaveTitle = "Nghỉ Phép";
 
-  static const String logoutButton = "Đăng xuất";
-  static const String profileTitle = "Hồ sơ của tôi";
-  static const String settingsTitle = "Cài đặt";
+  static const String logoutButton = "Đăng Xuất";
+  static const String profileTitle = "Hồ Sơ Của Tôi";
+  static const String settingsTitle = "Cài Đặt";
+  static const String changePasswordTitle = "Đổi Mật Khẩu";
+  static const String privacyPolicyTitle = "Chính Sách Bảo Mật";
+  static const String settingNotifiTitle = "Cài Đặt Thông Báo";
+  static const String removeUserTitle = "Xóa Tài Khoản";
+
+  static const String helpcenterTitle = "Trung Tâm Hỗ Trợ";
+  static const String chatboxTitle = "AI Chatbox";
+
+  static const String salaryTitle = "Phiếu Lương";
+
+  static const String employeebenefitsTitle = "Chính Sách Phúc Lợi";
+
+  static const String debtTitle = "Công Nợ";
+
   static const String notificationTitle = "Thông báo";
   static const String errorMessage = "Đã xảy ra lỗi. Vui lòng thử lại.";
   static const String loadingMessage = "Đang tải...";

@@ -9,12 +9,12 @@ import '../theme/app_typography.dart';
 
 /// Trạng thái của sự kiện
 
-class AppHorizontalCalendar extends StatefulWidget {
+class HorizontalCalendarComponent extends StatefulWidget {
   final Map<String, AttendanceStatus> events; // key: yyyy-MM-dd
   int? isSelectedDay;
   Color? iconColor;
 
-  AppHorizontalCalendar({
+  HorizontalCalendarComponent({
     super.key,
     this.events = const {}, // mặc định rỗng
     this.isSelectedDay, 
@@ -22,10 +22,10 @@ class AppHorizontalCalendar extends StatefulWidget {
   });
 
   @override
-  State<AppHorizontalCalendar> createState() => _AppHorizontalCalendarState();
+  State<HorizontalCalendarComponent> createState() => _HorizontalCalendarStateComponent();
 }
 
-class _AppHorizontalCalendarState extends State<AppHorizontalCalendar> {
+class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponent> {
   late DateTime today;
   late DateTime selectedDay;
   late DateTime currentMonth;

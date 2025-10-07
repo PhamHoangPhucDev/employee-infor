@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
-import '../../../core/components/app_circleIconButton.dart';
-import '../../../core/components/app_horizontalCalendar.dart';
-import '../../../core/components/app_sectionHeader.dart';
+import '../../../core/components/horizontal_calendar_component.dart';
+import '../../../core/components/app_SectionHeader.dart';
+import '../../../core/components/button/circle_icon_button.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../data/models/functionItem_model.dart';
 import '../../domain/services/auth_service.dart';
 import '../auth/auth_controller.dart';
 import '../leave/leave_page.dart';
-import 'widgets/iconButton_item.dart';
+import 'widgets/icon_text_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,27 +30,11 @@ class _HomePageState extends State<HomePage> {
 
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: AppColors.background,
-        //   title: Obx(() => Text('Xin chào, ${authService.user?.name ?? 'Bạn'}')),
-      
-        //   actions: [
-        //     // IconButton(
-        //     //   icon: const Icon(Icons.person),
-        //     //   onPressed: () => Get.toNamed(AppRoutes.profile),
-        //     // ),
-        //     // IconButton(
-        //     //   icon: const Icon(Icons.logout),
-        //     //   onPressed: () => Get.find<AuthController>().logout(),
-        //     // ),
-      
-        //   ],
-        // ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              //Header (iconbutton + avata)
-              Padding(
+        body: CustomScrollView(
+          slivers: [
+            //Header (iconbutton + avata)
+            SliverToBoxAdapter(
+              child: Padding(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,21 +42,22 @@ class _HomePageState extends State<HomePage> {
                     //Icon
                     Row(
                       children: [
-                        AppCircleIconButton(
+                        CircleIconButton(
                           icon: HugeIcons.strokeRoundedNotification01,
                           onPressed: () {
-                            print("Chuông thông báo");
+                            Get.toNamed(AppRoutes.notification);
                           },
                         ),
                         SizedBox(width: 5,),
-                        AppCircleIconButton(
+                        CircleIconButton(
                           icon: HugeIcons.strokeRoundedSettings01,
                           onPressed: () {
                             print("Cài đặt");
+                            Get.toNamed(AppRoutes.profile);
                           },
                         ),
                         SizedBox(width: 5,),
-                        AppCircleIconButton(
+                        CircleIconButton(
                           icon: HugeIcons.strokeRoundedSearch02,
                           onPressed: () {
                             print("Tìm kiếm");
@@ -103,45 +89,46 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
-
-              //Danh sách chức năng
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+            ),
+        
+            //Danh sách chức năng
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SectionHeader(title: "Danh sách chức năng",),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconTextButton(
-                          icon: HugeIcons.strokeRoundedFingerPrintCheck,
-                          label: "Chấm Công",
-                          onPressed: () => Get.toNamed(AppRoutes.attendance),
-                        ),
-                        IconTextButton(
-                          icon: HugeIcons.strokeRoundedUserList,
-                          label: "D.s Nhân Viên",
-                          onPressed: () => Get.toNamed(AppRoutes.employees),
-                        ),
-                        IconTextButton(
-                          icon: HugeIcons.strokeRoundedBitcoinCreditCard,
-                          label: "Công nợ",
-                          onPressed: () => print("Công nợ"),
-                        ),
-                        IconTextButton(
-                          icon: HugeIcons.strokeRoundedQuestion,
-                          label: "Hỗ Trợ",
-                          onPressed: () => print("Hỗ Trợ"),
-                        ),
-                      ],
+                    AppSectionHeader(title: "Danh sách chức năng"),
+                    // List ngang
+                    SizedBox(
+                      height: 10.h, // Chiều cao của item
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: functionItems.length,
+                        itemBuilder: (context, index) {
+                          final item = functionItems[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 12),
+                            child: SizedBox(
+                              width: 20.w,
+                              child: IconTextButton(
+                                icon: item.icon,
+                                label: item.label,
+                                onPressed: item.onPressed,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
               ),
-          
-              // Lịch trình
-              Container(
+            ),
+        
+            // Lịch trình
+            SliverToBoxAdapter(
+              child: Container(
                 color: AppColors.primary,
                 width: 100.w,
                 padding: EdgeInsets.symmetric(vertical: 5),
@@ -149,12 +136,12 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-                      child: SectionHeader(title: "Lịch trình sắp tới",actionText: "Tháng",color: AppColors.textLight,),
+                      child: AppSectionHeader(title: "Lịch trình sắp tới",actionText: "Tháng",color: AppColors.textLight,),
                     ),
                     SizedBox(height: 10,),
                     // Lịch ngang
-                    AppHorizontalCalendar(),
-          
+                    HorizontalCalendarComponent(),
+                      
                     SizedBox(height: 16),
                     // Chi tiết lịch hôm đó
                     Padding(
@@ -219,13 +206,15 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
-              // Chế độ
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+            ),
+
+            // Chế độ
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                 child: Column(
                   children: [
-                    SectionHeader(title: "Chế độ"),
+                    AppSectionHeader(title: "Chế độ"),
                     SizedBox(height: 10,),
                     Row(
                       children: [
@@ -246,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   HugeIcon(icon: HugeIcons.strokeRoundedCalendar03,color: AppColors.textLight,size: 25.sp),
-                                  Text('Nghỉ phép',style: AppTypography.button(color: AppColors.textLight),)
+                                  Text('Nghỉ Phép',style: AppTypography.button(color: AppColors.textLight),)
                                 ],
                               ),
                             ),
@@ -255,9 +244,9 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
-
+                      
                         const SizedBox(width: 8),
-
+                      
                         Column(
                           children: [
                             //Lương
@@ -274,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: TextButton.icon(
                                 onPressed: () {
-                                  print("Lương");
+                                  Get.toNamed(AppRoutes.salary);
                                 },
                                 icon: HugeIcon(icon: HugeIcons.strokeRoundedMoney03,color: AppColors.textLight,size: 25.sp),
                                 label: Text(
@@ -298,11 +287,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: TextButton.icon(
                                 onPressed: () {
-                                  print("Chế độ");
+                                  Get.toNamed(AppRoutes.employeebenefits);
                                 },
                                 icon: HugeIcon(icon: HugeIcons.strokeRoundedSaveMoneyDollar,color: AppColors.textLight,size: 25.sp),
                                 label: Text(
-                                  "Chế độ",
+                                  "Phúc Lợi",
                                   style: AppTypography.button(color: AppColors.textLight),
                                 ),
                               ),
@@ -310,13 +299,12 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ],
-                    )
-
+                    )   
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -37,11 +37,12 @@ class AppTypography {
     color: color,
   );
 
-  static TextStyle smallbody ({Color color = AppColors.text, decoration}) => base.copyWith(
+  static TextStyle smallbody ({Color color = AppColors.text,TextDecoration? decoration}) => base.copyWith(
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     color: color,
-    decoration: decoration
+    decoration: decoration,
+    decorationColor: color
   );
 
   static TextStyle caption ({Color color = AppColors.text}) => base.copyWith(
@@ -58,9 +59,9 @@ class AppTypography {
   );
 
   // Button text
-  static TextStyle button({Color color = AppColors.background}) => base.copyWith(
+  static TextStyle button({Color color = AppColors.background,FontWeight fW = FontWeight.w500}) => base.copyWith(
     fontSize: 16.sp,
-    fontWeight: FontWeight.w500,
+    fontWeight: fW,
     color: color,
   );
 }

@@ -20,7 +20,7 @@ class SplashPage extends StatelessWidget {
     //   }
     // });
       Future.delayed(const Duration(milliseconds: 800), () {
-        Get.offAllNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.welcome);
       });
 
     return Scaffold(

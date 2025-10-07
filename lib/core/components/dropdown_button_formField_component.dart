@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:sizer/sizer.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
