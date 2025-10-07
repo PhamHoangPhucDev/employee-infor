@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
 import '../../../core/components/horizontal_calendar_component.dart';
-import '../../../core/components/app_SectionHeader.dart';
 import '../../../core/components/button/circle_icon_button.dart';
+import '../../../core/components/section_header_component.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppSectionHeader(title: "Danh sách chức năng"),
+                    SectionHeaderComponent(title: "Danh sách chức năng"),
                     // List ngang
                     SizedBox(
                       height: 10.h, // Chiều cao của item
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-                      child: AppSectionHeader(title: "Lịch trình sắp tới",actionText: "Tháng",color: AppColors.textLight,),
+                      child: SectionHeaderComponent(title: "Lịch trình sắp tới",actionText: "Tháng",color: AppColors.textLight,),
                     ),
                     SizedBox(height: 10,),
                     // Lịch ngang
@@ -214,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                 child: Column(
                   children: [
-                    AppSectionHeader(title: "Chế độ"),
+                    SectionHeaderComponent(title: "Chế độ"),
                     SizedBox(height: 10,),
                     Row(
                       children: [

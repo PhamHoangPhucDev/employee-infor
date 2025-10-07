@@ -136,17 +136,18 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(title,style: AppTypography.subtitle()),
-              GestureDetector(
-                onTap: onActionTap,
-                child: actionText != null
-                  ? Text(actionText!, style: AppTypography.smallbody(color: AppColors.primary,decoration: TextDecoration.underline))
-                  : CircleIconButton(
-                    icon: HugeIcons.strokeRoundedFilter,
-                    backgroundColor: AppColors.primary,
-                    iconColor: AppColors.background,
-                    sizeCircle: 30,
-                  ),
-              ),
+              actionText != null 
+                ? GestureDetector(
+                  onTap: onActionTap,
+                  child: Text(actionText!, style: AppTypography.smallbody(color: AppColors.primary,decoration: TextDecoration.underline)))
+                : CircleIconButton(
+                  icon: HugeIcons.strokeRoundedFilter,
+                  backgroundColor: AppColors.primary,
+                  iconColor: AppColors.background,
+                  sizeCircle: 30,
+                  onPressed: onActionTap,
+                ),
+              
             ],
           ),
         ],
