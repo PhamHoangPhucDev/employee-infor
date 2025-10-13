@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._(); // private constructor để tránh khởi tạo
   
+  static const Color primaryRed = Color(0xFFF44336);
   static const Color primary = Color(0xFF1565C0);
   static const Color secondary = Color(0xFF42A5F5);
   static const Color accent = Color(0xFFFFC107);

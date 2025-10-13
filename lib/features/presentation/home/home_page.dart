@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
+import '../../../core/components/button/confirm_bottom_sheet.dart';
+import '../../../core/components/fancy_icon.dart';
 import '../../../core/components/horizontal_calendar_component.dart';
 import '../../../core/components/button/circle_icon_button.dart';
 import '../../../core/components/section_header_component.dart';
@@ -23,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DateTime selectedDate = DateTime.now();
+  bool isDark = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,61 +35,56 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
-            //Header (iconbutton + avata)
             SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //Icon
-                    Row(
-                      children: [
-                        CircleIconButton(
-                          icon: HugeIcons.strokeRoundedNotification01,
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.notification);
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(35),
+                    bottomRight: Radius.circular(35),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(child: FlutterLogo(),backgroundColor: AppColors.background,),
+                          SizedBox(width: 8,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Xin chào",
+                                style: AppTypography.smallbody(color: AppColors.background),
+                              ),
+                              Text(
+                                authService.user?.name ?? 'Bạn',
+                                style: AppTypography.body(color: AppColors.background),
+                              ),
+                            ],
+                          ),
+                          
+                        ],
+                      ),
+                      CircleIconButton(
+                        icon: HugeIcons.strokeRoundedLogout02,
+                        iconSize: 20,
+                        sizeCircle: 30,
+                        onPressed: ()=>showConfirmBottomSheet(
+                          title: "",
+                          message: "Bạn có chắc chắn muốn đăng xuất không?",
+                          confirmText: "Xác nhận",
+                          onConfirm: () {
+                            // controller.logout();
+                            print("Đăng xuất thành công");
                           },
                         ),
-                        SizedBox(width: 5,),
-                        CircleIconButton(
-                          icon: HugeIcons.strokeRoundedSettings01,
-                          onPressed: () {
-                            print("Cài đặt");
-                            Get.toNamed(AppRoutes.profile);
-                          },
-                        ),
-                        SizedBox(width: 5,),
-                        CircleIconButton(
-                          icon: HugeIcons.strokeRoundedSearch02,
-                          onPressed: () {
-                            print("Tìm kiếm");
-                          },
-                        ),
-                      ],
-                    ),
-                        
-                    //Avatar + name
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Xin chào",
-                              style: AppTypography.smallbody(color: AppColors.primary),
-                            ),
-                            Text(
-                              authService.user?.name ?? 'Bạn',
-                              style: AppTypography.body(),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 8,),
-                        CircleAvatar()
-                      ],
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -134,14 +132,10 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-                      child: SectionHeaderComponent(title: "Lịch trình sắp tới",actionText: "Tháng",color: AppColors.textLight,),
-                    ),
-                    SizedBox(height: 10,),
                     // Lịch ngang
-                    HorizontalCalendarComponent(),
-                      
+                    HorizontalCalendarComponent(
+                      title: "Lịch trình sắp tới",
+                    ), 
                     SizedBox(height: 16),
                     // Chi tiết lịch hôm đó
                     Padding(
@@ -152,8 +146,25 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(18),
                           side: BorderSide(color: AppColors.border, width: 1),
                         ),
-                        child: Padding(
+                        child: Container(
                           padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                AppColors.background.withValues(alpha: 0.1),
+                                AppColors.background.withValues(alpha: 0.05),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(color: AppColors.background.withValues(alpha: 0.3)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.background.withValues(alpha: 0.05),
+                                blurRadius: 8,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -220,29 +231,19 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         // Nghỉ phép
                         Expanded(
-                          child: InkWell(
-                            child: Container(
-                              height: 16.h + 8,
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                border: Border.all(
-                                  color: AppColors.border, // màu border
-                                  width: 2,           // độ dày border
-                                ),
-                                borderRadius: BorderRadius.circular(18), // bo góc
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  HugeIcon(icon: HugeIcons.strokeRoundedCalendar03,color: AppColors.textLight,size: 25.sp),
-                                  Text('Nghỉ Phép',style: AppTypography.button(color: AppColors.textLight),)
-                                ],
-                              ),
+                          child: FeatureCardBase(
+                            height: 16.h + 8,
+                            backgroundIcon: Icons.calendar_month,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HugeIcon(icon: HugeIcons.strokeRoundedCalendar03, color: AppColors.primary, size: 25.sp),
+                                SizedBox(height: 12),
+                                Text('Nghỉ Phép',style: AppTypography.button(color: AppColors.primary),)
+                              ],
                             ),
-                            onTap: () {
-                              Get.to(() => LeavePage());
-                            },
-                          ),
+                            onTap: ()=>  Get.to(() => LeavePage()),
+                          )
                         ),
                       
                         const SizedBox(width: 8),
@@ -250,56 +251,47 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           children: [
                             //Lương
-                            Container(
-                              width: 40.w,
+                            FeatureCardBase(
                               height: 8.h,
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                border: Border.all(
-                                  color: AppColors.border, // màu border
-                                  width: 2,           // độ dày border
-                                ),
-                                borderRadius: BorderRadius.circular(18), // bo góc
+                              width: 40.w,
+                              sizeIcon: 70,
+                              backgroundIcon: Icons.money_rounded,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  HugeIcon(icon: HugeIcons.strokeRoundedMoney03,color: AppColors.primary,size: 25.sp),
+                                  Text(
+                                    "Lương",
+                                    style: AppTypography.button(color: AppColors.primary),
+                                  ),
+                                ],
                               ),
-                              child: TextButton.icon(
-                                onPressed: () {
-                                  Get.toNamed(AppRoutes.salary);
-                                },
-                                icon: HugeIcon(icon: HugeIcons.strokeRoundedMoney03,color: AppColors.textLight,size: 25.sp),
-                                label: Text(
-                                  "Lương",
-                                  style: AppTypography.button(color: AppColors.textLight),
-                                ),
-                              )
+                              onTap: ()=> Get.toNamed(AppRoutes.salary),
                             ),
                             const SizedBox(height: 8),
                             //Phúc lợi
-                            Container(
-                              width: 40.w,
+                            FeatureCardBase(
                               height: 8.h,
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                border: Border.all(
-                                  color: AppColors.border, // màu border
-                                  width: 2,           // độ dày border
-                                ),
-                                borderRadius: BorderRadius.circular(18), // bo góc
+                              width: 40.w,
+                              sizeIcon: 70,
+                              backgroundIcon: Icons.monetization_on_outlined,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  HugeIcon(icon: HugeIcons.strokeRoundedSaveMoneyDollar,color: AppColors.primary,size: 25.sp),
+                                  Text(
+                                    "Phúc Lợi",
+                                    style: AppTypography.button(color: AppColors.primary),
+                                  ),
+                                ],
                               ),
-                              child: TextButton.icon(
-                                onPressed: () {
-                                  Get.toNamed(AppRoutes.employeebenefits);
-                                },
-                                icon: HugeIcon(icon: HugeIcons.strokeRoundedSaveMoneyDollar,color: AppColors.textLight,size: 25.sp),
-                                label: Text(
-                                  "Phúc Lợi",
-                                  style: AppTypography.button(color: AppColors.textLight),
-                                ),
-                              ),
+                              onTap: ()=> Get.toNamed(AppRoutes.employeebenefits),
                             ),
                           ],
                         ),
                       ],
-                    )   
+                    ),
+                    SizedBox(height: 10.h,)
                   ],
                 ),
               ),

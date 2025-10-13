@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-import '../../../../core/components/button/text_button_component.dart';
+import '../../../../core/components/filter_button_row_component.dart';
 import '../../../../core/components/listTile_icon_component.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_typography.dart';
 
 class InternalDebtPage extends StatelessWidget {
   const InternalDebtPage({super.key});
@@ -18,33 +17,11 @@ class InternalDebtPage extends StatelessWidget {
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              children: [
-                Text("Sắp xếp theo", style: AppTypography.smallbody()),
-                const SizedBox(width: 5),
-                TextButtonComponent(
-                  title: "A->Z",
-                  height: 25,
-                ),
-                const SizedBox(width: 5),
-                TextButtonComponent(
-                  title: "Bảo hiểm",
-                  height: 25,
-                  color: AppColors.background,
-                ),
-                const SizedBox(width: 5),
-                TextButtonComponent(
-                  title: "Vay",
-                  height: 25,
-                  color: AppColors.background,
-                ),
-                const SizedBox(width: 5),
-                TextButtonComponent(
-                  title: "Khác",
-                  height: 25,
-                  color: AppColors.background,
-                ),
-              ],
+            child: FilterButtonRowComponent(
+              prefixText: "Sắp xếp theo",
+              filters: ["A->Z", "Bảo hiểm", "Vay", "Khác"],
+              initialValue: "A->Z",
+              onChanged: (value) => print("Đã chọn: $value"),
             ),
           ),
         ),

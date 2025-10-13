@@ -10,7 +10,7 @@ class LeaveController extends GetxController {
   // Reactive states (GetX)
   var showMonthView = true.obs;   // true: hiển thị Grid tháng; false: hiển thị horizontal + form
   var showContent = true.obs;     // control để ẩn/hiện nội dung khi thay đổi height
-  var selectedDay = DateTime.now().day.obs; // ngày đang được chọn (như int: 1..31)
+  var selectedDay = DateTime.now().obs; // ngày đang được chọn (như int: 1..31)
 
   //Thời gian nghỉ trong ngày
   var leaveType = RxnString();
@@ -44,11 +44,11 @@ class LeaveController extends GetxController {
 
   /// Scroll tới trang tương ứng ngày (1-based => page index = day-1).
   /// Dùng addPostFrameCallback + hasClients để tránh lỗi "PageController not attached".
-  void scrollToDay(int day) {
+  void scrollToDay(DateTime day) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
         // jumpToPage nhanh; nếu muốn hiệu ứng mượt hãy dùng animateToPage(...)
-        scrollController.jumpToPage(day - 1);
+        scrollController.jumpToPage(day.day - 1);
       }
     });
   }
@@ -57,7 +57,7 @@ class LeaveController extends GetxController {
   /// - cập nhật selectedDay
   /// - ẩn content (để AnimatedSize co/thu trước)
   /// - sau delay (khoảng thời gian AnimatedSize chạy) bật content và scroll tới ngày
-  void selectDay(int day) {
+  void selectDay(DateTime day) {
     selectedDay.value = day;
     showContent.value = false;
     showMonthView.value = false;

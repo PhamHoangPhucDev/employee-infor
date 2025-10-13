@@ -25,7 +25,7 @@ class _TextButtonComponentState extends State<TextButtonComponent> {
       child: ElevatedButton(
         onPressed: widget.onPressed??(){},
         style: ElevatedButton.styleFrom(
-          padding: widget.height != null ?EdgeInsets.zero:null,
+          padding: widget.height != null ?EdgeInsets.symmetric(horizontal: 5):null,
           backgroundColor: widget.color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 25),

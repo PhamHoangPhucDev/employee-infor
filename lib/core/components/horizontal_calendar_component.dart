@@ -6,19 +6,23 @@ import 'package:sizer/sizer.dart';
 import '../../features/data/models/attendance_model.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import 'section_header_component.dart';
 
-/// Trạng thái của sự kiện
-
+/// HorizontalCalendarComponent: Lịch ngang cho phép chọn ngày, đổi tháng, highlight ngày đã chọn
 class HorizontalCalendarComponent extends StatefulWidget {
   final Map<String, AttendanceStatus> events; // key: yyyy-MM-dd
-  int? isSelectedDay;
-  Color? iconColor;
+  final DateTime? isSelectedDay; // ngày được chọn ban đầu (1-31)
+  final Color? iconColor;
+  final String? title;
+  final ValueChanged<DateTime>? onDateSelected; // callback khi chọn ngày
 
-  HorizontalCalendarComponent({
+  const HorizontalCalendarComponent({
     super.key,
-    this.events = const {}, // mặc định rỗng
-    this.isSelectedDay, 
-    this.iconColor = AppColors.buttonLight
+    this.events = const {},
+    this.isSelectedDay,
+    this.iconColor = AppColors.buttonLight,
+    this.title,
+    this.onDateSelected,
   });
 
   @override
@@ -40,15 +44,56 @@ class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponen
     final now = DateTime.now();
 
     today = widget.isSelectedDay != null
-      ? DateTime(now.year, now.month, widget.isSelectedDay!) // lấy năm & tháng hiện tại
-      : now;
+        ? widget.isSelectedDay!
+        : now;
     selectedDay = today;
     currentMonth = DateTime(today.year, today.month);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToToday();
+      _scrollToSelectedDay();
       _scrollController.addListener(_checkScroll);
     });
+  }
+
+  /// Đổi tháng (offset: ±1)
+  void _changeMonth(int offset) {
+    final newMonth = DateTime(currentMonth.year, currentMonth.month + offset, 1);
+
+    setState(() => currentMonth = newMonth);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_scrollController.hasClients) return;
+
+      // Nếu selectedDay nằm trong tháng hiện tại → scroll tới
+      if (selectedDay.year == currentMonth.year &&
+          selectedDay.month == currentMonth.month) {
+        _scrollToSelectedDay();
+      } else {
+        // Tháng không chứa selectedDay → về đầu
+        _scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOut,
+        );
+      }
+      _checkScroll();
+    });
+  }
+
+  /// Cuộn đến ngày đang chọn
+  void _scrollToSelectedDay() {
+    if (!_scrollController.hasClients) return;
+
+    final dayIndex = selectedDay.day - 1;
+    const margin = 8.0;
+    final itemWidth = 12.w + margin;
+    final targetOffset = dayIndex * itemWidth;
+
+    _scrollController.animateTo(
+      targetOffset.clamp(0, _scrollController.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+    );
   }
 
   void _checkScroll() {
@@ -59,48 +104,25 @@ class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponen
     });
   }
 
-  void _scrollToToday() {
-    int dayIndex = today.day - 1;
-    // Chiều rộng item thực tế: 12.w + margin horizontal * 2
-    double itemWidth = 12.w + 8; // vì margin horizontal: 4
-    double targetOffset = dayIndex * itemWidth;
-
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        targetOffset,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeOut,
-      );
-    }
-  }
-
-  void _scrollLeft() {
+  void _scrollHorizontal(double offset) {
     if (!_scrollController.hasClients) return;
     _scrollController.animateTo(
-      (_scrollController.offset - 200).clamp(0, _scrollController.position.maxScrollExtent),
+      (_scrollController.offset + offset)
+          .clamp(0, _scrollController.position.maxScrollExtent),
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeOut,
     );
   }
 
-  void _scrollRight() {
-    if (!_scrollController.hasClients) return;
-    _scrollController.animateTo(
-      (_scrollController.offset + 200).clamp(0, _scrollController.position.maxScrollExtent),
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeOut,
-    );
-  }
-
-  /// Trả về màu dot theo trạng thái
+  /// Màu dot trạng thái
   Color _getDotColor(AttendanceStatus status) {
     switch (status) {
-      case AttendanceStatus.full://duyệt
-        return AppColors.success;
-      case AttendanceStatus.lateOrEarly://chưa duyệt
-        return AppColors.warning;
-      case AttendanceStatus.missing://từ chối
-        return AppColors.error;
+      case AttendanceStatus.full:
+        return AppColors.success; // Duyệt
+      case AttendanceStatus.lateOrEarly:
+        return AppColors.warning; // Chưa duyệt
+      case AttendanceStatus.missing:
+        return AppColors.error; // Từ chối
       case AttendanceStatus.empty:
         return Colors.transparent;
     }
@@ -108,27 +130,61 @@ class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponen
 
   @override
   Widget build(BuildContext context) {
-    int daysInMonth = DateUtils.getDaysInMonth(currentMonth.year, currentMonth.month);
+    final daysInMonth = DateUtils.getDaysInMonth(currentMonth.year, currentMonth.month);
 
     return Column(
       children: [
+        // Header tháng + nút chuyển tháng
+        SectionHeaderComponent(
+          title: widget.title ?? "",
+          color: widget.iconColor!,
+          trading: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () => _changeMonth(-1),
+                child: HugeIcon(
+                  icon: HugeIcons.strokeRoundedArrowLeft01,
+                  color: widget.iconColor!,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  DateFormat('MM/yyyy').format(currentMonth),
+                  style: AppTypography.body(color: widget.iconColor!),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => _changeMonth(1),
+                child: HugeIcon(
+                  icon: HugeIcons.strokeRoundedArrowRight01,
+                  color: widget.iconColor!,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Hàng lịch ngang
         Row(
           children: [
-            //Nút trái
-            if (!_atStart)
-              SizedBox(
-                width: 5.w,
-                child: InkWell(
-                  onTap: _scrollLeft,
-                  child: HugeIcon(
-                    icon: HugeIcons.strokeRoundedArrowLeft01,
-                    size: 20.sp,
-                    color: widget.iconColor,
-                  ),
-                ),
-              )
-            else
-              SizedBox(width: 5.w),
+            // Nút trái
+            SizedBox(
+              width: 5.w,
+              child: !_atStart
+                  ? InkWell(
+                      onTap: () => _scrollHorizontal(-200),
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowLeft01,
+                        size: 20.sp,
+                        color: widget.iconColor,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+
+            // Danh sách ngày
             Expanded(
               child: SizedBox(
                 height: 10.h,
@@ -137,29 +193,42 @@ class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponen
                   scrollDirection: Axis.horizontal,
                   itemCount: daysInMonth,
                   itemBuilder: (context, index) {
-                    DateTime day = DateTime(currentMonth.year, currentMonth.month, index + 1);
-                    bool isSelected = selectedDay.year == day.year &&
-                                    selectedDay.month == day.month &&
-                                    selectedDay.day == day.day;
-                    String key = DateFormat("yyyy-MM-dd").format(day);
-                    AttendanceStatus? eventStatus = widget.events[key];
+                    final day = DateTime(currentMonth.year, currentMonth.month, index + 1);
+                    final isSelected = selectedDay.year == day.year &&
+                        selectedDay.month == day.month &&
+                        selectedDay.day == day.day;
+                    final key = DateFormat("yyyy-MM-dd").format(day);
+                    final eventStatus = widget.events[key];
 
                     return GestureDetector(
                       onTap: () {
-                        setState(() {
-                          selectedDay = day;
-                        });
+                        setState(() => selectedDay = day);
+                        widget.onDateSelected?.call(day);
                       },
-                      child: Container(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
                         width: 12.w,
                         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
                         decoration: BoxDecoration(
-                          color: isSelected ? AppColors.background : AppColors.primary,
-                          border: Border.all(
-                            width: 1,
-                            color: isSelected?AppColors.primary:AppColors.background,
-                          ),
+                          gradient: isSelected
+                              ? LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    AppColors.background,
+                                    AppColors.background.withValues(alpha: .95),
+                                  ],
+                                )
+                              : LinearGradient(
+                                  colors: [
+                                    AppColors.primary,
+                                    AppColors.primary.withValues(alpha: .9),
+                                  ],
+                                ),
                           borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                            color: isSelected ? AppColors.primary : AppColors.background,
+                          ),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -167,7 +236,9 @@ class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponen
                             Text(
                               "${day.day}",
                               style: AppTypography.body(
-                                color: isSelected ? AppColors.primary : AppColors.textLight,
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : AppColors.textLight,
                               ),
                             ),
                             Text(
@@ -176,7 +247,6 @@ class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponen
                                   ? AppTypography.body(color: AppColors.primary)
                                   : AppTypography.smallbody(color: AppColors.textLight),
                             ),
-                            // dot trạng thái
                             if (eventStatus != null)
                               Container(
                                 margin: const EdgeInsets.only(top: 4),
@@ -195,21 +265,21 @@ class _HorizontalCalendarStateComponent extends State<HorizontalCalendarComponen
                 ),
               ),
             ),
-            //nút phải
-            if (!_atEnd)
-              SizedBox(
-                width: 5.w,
-                child: InkWell(
-                  onTap: _scrollRight,
-                  child: HugeIcon(
-                    icon: HugeIcons.strokeRoundedArrowRight01,
-                    size: 20.sp,
-                    color: widget.iconColor,
-                  ),
-                ),
-              )
-            else
-              SizedBox(width: 5.w),
+
+            // Nút phải
+            SizedBox(
+              width: 5.w,
+              child: !_atEnd
+                  ? InkWell(
+                      onTap: () => _scrollHorizontal(200),
+                      child: HugeIcon(
+                        icon: HugeIcons.strokeRoundedArrowRight01,
+                        size: 20.sp,
+                        color: widget.iconColor,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ),
           ],
         ),
       ],

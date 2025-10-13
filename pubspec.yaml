@@ -44,6 +44,8 @@ dependencies:
   qr_flutter: ^4.1.0 #QR contactUs
   dash_chat_2: ^0.0.21 #chat customer
   flutter_dotenv: ^5.1.0 #ẩn key AI chatbox
+  shimmer: ^3.0.0 #ánh sáng chạy động ở disabled/màn hình chờ
+  curved_navigation_bar: ^1.0.6 #thanh điều hướng bottom
 
 dev_dependencies:
   flutter_test:

@@ -3,11 +3,10 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/components/appBar_component.dart';
+import '../../../core/components/app_dialog_component.dart.dart';
 import '../../../core/components/text_field_component.dart';
-import '../../../core/components/button/text_button_component.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
 import '../helpcenter/widgets/outline_tabBar.dart';
 import '../helpcenter/widgets/sliver_appBar_delegate.dart';
 import 'pages/advance_salary.dart';
@@ -49,7 +48,7 @@ class _DebtPageState extends State<DebtPage> with TickerProviderStateMixin {
               delegate: SliverAppBarDelegate(
                 child:  
                 PreferredSize(
-                  preferredSize: Size.fromHeight(50),
+                  preferredSize: Size.fromHeight(5.h),
                   child: OutlineTabBar(
                     controller: mainTabController,
                     tabs: listTab,
@@ -77,34 +76,20 @@ class _DebtPageState extends State<DebtPage> with TickerProviderStateMixin {
           if (mainTabController.index == 0) {
             return FloatingActionButton(
               onPressed: () {
-                showModalBottomSheet(
-                  backgroundColor: AppColors.background,
+                AppDialogComponent.show(
                   context: context,
-                  builder: (_) => Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('Tạm Ứng Lương', style: AppTypography.subtitle()),
-                        SizedBox(height: 20,),
-                        TextFieldComponent(
-                          controller: TextEditingController(),
-                          label: "Số tiền cần tạm ứng",
-                        ),
-                        TextFieldComponent(
-                          controller: TextEditingController(),
-                          label: "Lý do",
-                        ),
-                        TextFieldComponent(
-                          controller: TextEditingController(),
-                          label: "Ngày nhận",
-                          hintText: "Ngày nhận mong muốn",
-                        ),
-                        SizedBox(height: 5.h),
-                        TextButtonComponent(onPressed: () {}, title: "Gửi yêu cầu",),
-                      ],
-                    ),
-                  ),
+                  title: "Tạm Ứng Lương",
+                  type: DialogType.bottomSheet,
+                  confirmText: "Gửi yêu cầu",
+                  confirmColor: AppColors.primary,
+                  fields: [
+                    TextFieldComponent(label: "Số tiền cần tạm ứng", controller: TextEditingController()),
+                    TextFieldComponent(label: "Lý do", controller: TextEditingController()),
+                    TextFieldComponent(label: "Ngày nhận", hintText: "Ngày nhận mong muốn", controller: TextEditingController()),
+                  ],
+                  onConfirm: () {
+                    // xử lý khi nhấn xác nhận
+                  },
                 );
               },
               backgroundColor: AppColors.background,
@@ -113,7 +98,7 @@ class _DebtPageState extends State<DebtPage> with TickerProviderStateMixin {
               ),
               child: HugeIcon(
                 icon: HugeIcons.strokeRoundedAdd01,
-                size: 30,
+                size: 25.sp,
                 color: AppColors.primary,
               ),
             );

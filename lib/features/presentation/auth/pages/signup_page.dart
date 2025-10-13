@@ -38,14 +38,6 @@ class SignupPage extends StatelessWidget {
                 hintText: "Nhập ${AppStrings.fullNameLabel}",
                 controller: fullnameCtrl,
               ),
-              
-              const SizedBox(height: 5),
-              TextFieldComponent(
-                label: AppStrings.passwordLabel,
-                hintText: "Nhập ${AppStrings.passwordLabel}",
-                isPassword: true,
-                controller: passCtrl,
-              ),
           
               const SizedBox(height: 5),
               TextFieldComponent(
@@ -66,6 +58,21 @@ class SignupPage extends StatelessWidget {
                 label: AppStrings.birthdayLabel,
                 hintText: "DD/MM/YYYY",
                 controller: birthdayCtrl,
+              ),
+
+              const SizedBox(height: 5),
+              TextFieldComponent(
+                label: AppStrings.passwordLabel,
+                hintText: "Nhập ${AppStrings.passwordLabel}",
+                isPassword: true,
+                controller: passCtrl,
+              ),
+
+              const SizedBox(height: 5),
+              TextFieldComponent(
+                label: AppStrings.confirmPasswordLabel,
+                isPassword: true,
+                controller: passCtrl,
               ),
               
               const SizedBox(height: 20),

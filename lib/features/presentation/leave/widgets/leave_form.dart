@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/components/button/text_button_component.dart';
 import '../../../../core/components/dropdown_button_formField_component.dart';
 import '../../../../core/components/text_field_component.dart';
+import '../../../../core/components/timeRangePickerComponent.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../leave_controller.dart';
 
 class LeaveForm extends StatefulWidget {
-  final LeaveController controller;
   LeaveForm({Key? key, required this.controller}) : super(key: key);
+  final LeaveController controller;
 
   @override
   State<LeaveForm> createState() => _LeaveFormState();
@@ -27,9 +29,11 @@ class _LeaveFormState extends State<LeaveForm> {
         slivers: [
           SliverList(
             delegate: SliverChildListDelegate([
-              Text(
-                "Đăng ký nghỉ phép cho tháng ${DateTime.now().month}",
-                style: AppTypography.subtitle(),
+              Center(
+                child: Obx(() =>Text(
+                  "Đăng ký nghỉ ngày ${DateFormat('dd/MM/yyyy').format(widget.controller.selectedDay.value)}",
+                  style: AppTypography.subtitle(),
+                )),
               ),
               const SizedBox(height: 15),
 
@@ -43,58 +47,18 @@ class _LeaveFormState extends State<LeaveForm> {
               /// Nếu chọn "Theo giờ" thì hiện thêm chọn giờ
               Obx(() {
                 if (widget.controller.leaveType.value == "Theo giờ") {
-                  return Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text("Bắt đầu"),
-                            TextButtonComponent(
-                              onPressed: () async {
-                                final picked = await showTimePicker(
-                                  context: context,
-                                  initialTime: widget.controller.startTime.value,
-                                );
-                                if (picked != null) {
-                                  widget.controller.startTime.value = picked;
-                                }
-                              },
-                              title: widget.controller.startTime.value.format(context),
-                              color: AppColors.background,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text("Kết thúc"),
-                            TextButtonComponent(
-                              onPressed: () async {
-                                final picked = await showTimePicker(
-                                  context: context,
-                                  initialTime: widget.controller.endTime.value,
-                                );
-                                if (picked != null) {
-                                  widget.controller.endTime.value = picked;
-                                }
-                              },
-                              title: widget.controller.endTime.value.format(context),
-                              color: AppColors.background,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  return TimeRangePickerComponent(
+                    startTime: widget.controller.startTime.value,
+                    endTime: widget.controller.endTime.value,
+                    onStartChanged: (v) => widget.controller.startTime.value = v,
+                    onEndChanged: (v) =>  widget.controller.endTime.value = v,
                   );
                 } else {
                   return const SizedBox.shrink();
                 }
               }),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
 
               /// Dropdown chọn lý do
               DropdownButtonFormFieldComponent(
@@ -120,7 +84,6 @@ class _LeaveFormState extends State<LeaveForm> {
                   TextButtonComponent(
                     onPressed: widget.controller.backToMonth,
                     title: "Quay lại tháng",
-                    width: 35.w,
                     color: AppColors.background,
                   ),
                   TextButtonComponent(
@@ -138,7 +101,6 @@ class _LeaveFormState extends State<LeaveForm> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
             ]),
           ),
         ],

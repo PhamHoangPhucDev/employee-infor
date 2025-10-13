@@ -4,51 +4,43 @@ import '../theme/app_typography.dart';
 
 class SectionHeaderComponent extends StatelessWidget {
   final String title;
-  final String actionText;
+  final Widget? trading;
   final VoidCallback? onActionPressed;
   final Color color;
 
   SectionHeaderComponent({
     Key? key,
     required this.title,
-    this.actionText = "Xem tất cả",
+    this.trading,
     this.onActionPressed,
     this.color = AppColors.primary
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: AppTypography.body(color: color),
-            ),
-            GestureDetector(
-              onTap: onActionPressed,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    actionText,
-                    style: AppTypography.smallbody(
-                      color: color,
-                      decoration: TextDecoration.underline, // gạch chân
-                    ),
-                  ),
-                ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: AppTypography.body(color: color),
               ),
-            ),
-          ],
-        ),
-        Divider(
-          color: AppColors.backgroundInput,
-          height: 5,
-        ),
-      ],
+              GestureDetector(
+                onTap: onActionPressed,
+                child: trading??SizedBox.shrink(),
+              ),
+            ],
+          ),
+          Divider(
+            color: AppColors.backgroundInput,
+            height: 5,
+          ),
+        ],
+      ),
     );
   }
 }

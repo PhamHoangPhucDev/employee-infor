@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import '../../../../core/components/horizontal_calendar_component.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../data/models/attendance_model.dart';
@@ -20,17 +21,18 @@ class LeaveHorizontal extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 90,
-          child: HorizontalCalendarComponent(
-            events: {
-              "2025-09-10": AttendanceStatus.full,
-              "2025-09-15": AttendanceStatus.missing,
-              "2025-09-22": AttendanceStatus.lateOrEarly,
-            },
-            isSelectedDay: controller.selectedDay.value,
-            iconColor: AppColors.primary,
-          ),
+        HorizontalCalendarComponent(
+          events: {
+            "2025-09-10": AttendanceStatus.full,
+            "2025-09-15": AttendanceStatus.missing,
+            "2025-09-22": AttendanceStatus.lateOrEarly,
+          },
+          isSelectedDay: controller.selectedDay.value,
+          iconColor: AppColors.primary,
+          title: "Chọn ngày nghỉ",
+          onDateSelected: (day) {
+            controller.selectedDay.value = day;
+          },
         ),
         Expanded(child: LeaveForm(controller: controller)),
       ],

@@ -16,4 +16,6 @@ abstract class AppRoutes {
   static const String notification = '/notification'; // thông báo
   static const String profile = '/profile';// hồ sơ cá nhân
   static const String settings = '/settings'; // cài đặt
+  static const String navigation = '/navigation'; // Điều hướng dashboard
+  static const String task = '/task'; // Công việc
 }

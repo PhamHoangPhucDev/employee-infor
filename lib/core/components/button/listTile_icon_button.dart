@@ -16,22 +16,46 @@ class ListTileIconButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return InkWell(
       onTap: func,
-      leading: CircleIconButton(
-        icon: icon ?? HugeIcons.strokeRoundedBubbleChatQuestion,
-        backgroundColor: AppColors.primary,
-        iconColor: AppColors.textLight,
-        iconSize: 22,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleIconButton(
+              icon: icon ?? HugeIcons.strokeRoundedBubbleChatQuestion,
+              backgroundColor: AppColors.primary,
+              iconColor: AppColors.textLight,
+              iconSize: 22,
+            ),
+            SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title ?? "",
+                    style: AppTypography.button(color: AppColors.text),
+                  ),
+                  if (subtitle != null && subtitle!.isNotEmpty)
+                    Text(
+                      subtitle!,
+                      style: AppTypography.smallbody(),
+                    ),
+                ],
+              ),
+            ),
+            if (title != AppStrings.logoutButton)
+              HugeIcon(
+                icon: HugeIcons.strokeRoundedArrowRight01,
+                size: 22.sp,
+                color: AppColors.primary,
+              ),
+          ],
+        ),
       ),
-      title: Text(title ?? "",style: AppTypography.button(color: AppColors.text),),
-      subtitle: Text(subtitle ?? "",style: AppTypography.smallbody(),),
-      trailing: title != AppStrings.logoutButton
-        ?HugeIcon(
-          icon: HugeIcons.strokeRoundedArrowRight01,
-          size: 22.sp,
-          color: AppColors.primary,
-        ):SizedBox.shrink(),
     );
   }
 }

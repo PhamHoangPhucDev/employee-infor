@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/components/appBar_component.dart';
+import '../../../core/components/button/text_button_component.dart';
+import '../../../core/components/filter_button_row_component.dart';
 import '../../../core/components/listTile_icon_component.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -64,43 +66,11 @@ class EmployeesPage extends StatelessWidget {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  Text("Sắp xếp theo", style: AppTypography.smallbody()),
-                  const SizedBox(width: 5),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      minimumSize: const Size(50, 25),
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    onPressed: () {
-                      print("A->Z");
-                    },
-                    child: Text("A->Z",
-                        style: AppTypography.button(color: AppColors.textLight)),
-                  ),
-                  const SizedBox(width: 5),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.background,
-                      minimumSize: const Size(50, 25),
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        side: BorderSide(color: AppColors.primary, width: 1.5),
-                      ),
-                    ),
-                    onPressed: () {
-                      print("Hiện filter");
-                    },
-                    child: Text("Filter",
-                        style: AppTypography.button(color: AppColors.primary)),
-                  ),
-                ],
+              child: FilterButtonRowComponent(
+                prefixText: "Sắp xếp theo",
+                filters: ["A->Z", "Filter"],
+                initialValue: "A->Z",
+                onChanged: (value) => print("Đã chọn: $value"),
               ),
             ),
           ),
@@ -121,23 +91,13 @@ class EmployeesPage extends StatelessWidget {
                 icon: HugeIcons.strokeRoundedUserCircle,
                 title: "Nguyễn Văn A$index",
                 subtitle: "Nhân viên $index",
-                trailing: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: AppColors.background,
-                    minimumSize: const Size(50, 25),
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(color: AppColors.primary, width: 1.5),
-                    ),
-                  ),
-                  onPressed: () {
-                    print("Chuyển page Info Nguyễn Văn A$index");
-                    Get.to(() => InfoEmployeePage());
-                  },
-                  child: Text("Info",
-                      style: AppTypography.button(color: AppColors.primary)),
+                trailing: TextButtonComponent(
+                  title: "Info",
+                  color: AppColors.background,
+                  height: 25,
+                  onPressed: () =>  Get.to(() => InfoEmployeePage()),
                 ),
+                func: () =>  Get.to(() => InfoEmployeePage()),
               ),
               childCount: 10,
             ),

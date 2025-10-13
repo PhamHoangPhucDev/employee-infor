@@ -10,6 +10,8 @@ import '../../features/presentation/employees/employees_binding.dart';
 import '../../features/presentation/employees/employees_page.dart';
 import '../../features/presentation/helpcenter/helpcenter_binding.dart';
 import '../../features/presentation/helpcenter/helpcenter_page.dart';
+import '../../features/presentation/navigation/navigation_binding.dart';
+import '../../features/presentation/navigation/navigation_page.dart';
 import '../../features/presentation/notification/notification_binding.dart';
 import '../../features/presentation/notification/notification_page.dart';
 import '../../features/presentation/salary/salary_binding.dart';
@@ -104,6 +106,11 @@ class AppPages {
       name: AppRoutes.debt,
       page: () => DebtPage(),
       binding: DebtBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.navigation,
+      page: () => NavigationPage(),
+      binding: NavigationBinding(),
     ),
   ];
 }

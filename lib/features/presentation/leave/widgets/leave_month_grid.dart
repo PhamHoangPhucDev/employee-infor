@@ -10,27 +10,26 @@ class LeaveMonthGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // MonthGridViewComponent là component grid mà bạn đã chuẩn bị,
-    // nó nhận callback getStatus & onDaySelected.
+    // MonthGridViewComponent nhận callback getStatus & onDaySelected.
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SectionHeaderComponent(title: "Chọn ngày muốn nghỉ",actionText: "Tháng",),
-          SizedBox(height: 20,),
           Expanded(
             child: MonthGridViewComponent(
-              initialSelectedDay: DateTime.now(),
               events: {
                 "2025-10-10": AttendanceStatus.full,
                 "2025-10-15": AttendanceStatus.missing,
                 "2025-10-22": AttendanceStatus.lateOrEarly,
               },
+              month: DateTime(2025, 10),
+              title: "Chọn ngày muốn nghỉ",
+              notesDot: ["Đã duyệt","Đang duyệt","Từ chối"],
               onDaySelected: (day) {
                 // Khi user chọn ngày ở grid -> sử dụng LeaveController để chuyển view
-                controller.selectDay(day.day);
+                controller.selectDay(day);
               },
             ),
           ),

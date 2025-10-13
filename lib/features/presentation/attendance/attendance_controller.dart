@@ -5,8 +5,6 @@ import 'package:intl/intl.dart';
 import '../../data/models/attendance_model.dart';
 
 class AttendanceController extends GetxController {
-  /// Dropdown (Ngày/Tháng/Năm)
-  RxString selectedValue = 'Tháng'.obs;
 
   /// Ngày đang được chọn
   final Rx<DateTime> selectedDay = DateTime.now().obs;

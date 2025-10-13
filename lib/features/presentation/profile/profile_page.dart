@@ -23,6 +23,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarComponent(
         title: AppStrings.profileTitle,
+        showBack: false,
         actions: [
           CircleIconButton(
             icon: HugeIcons.strokeRoundedSettings01,
@@ -70,7 +71,7 @@ class ProfilePage extends StatelessWidget {
           SliverFillRemaining(
             hasScrollBody: false,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
               child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.stretch, // căng đều widget width
                 children: [

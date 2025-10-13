@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/components/appBar_component.dart';
@@ -86,49 +87,44 @@ class AttendancePage extends StatelessWidget {
                     "Với mục tiêu tối thiểu là có thể thực hiện được, điều này sẽ không xảy ra khi bạn phải làm việc quá sức để có được giải pháp sau mỗi giao dịch.",
                     style: AppTypography.smallbody(),
                   ),
-                  Divider(color: AppColors.backgroundInput),
                 ],
               ),
             ),
           ),
 
           /// Dropdown chọn ngày / tháng / năm
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Text("Chọn ngày",style: AppTypography.body(color: AppColors.primary)),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Obx(
-                      () => DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          value: controller.selectedValue.value,
-                          icon: Icon(Icons.keyboard_arrow_down_rounded,
-                              color: AppColors.primary),
-                          iconSize: 25.sp,
-                          style: AppTypography.body(),
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              controller.selectedValue.value = newValue;
-                            }
-                          },
-                          items: options
-                              .map((value) => DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  ))
-                              .toList(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 20),
+          //     child: Row(
+          //       children: [
+          //         Text("Chọn ngày",style: AppTypography.body(color: AppColors.primary)),
+          //         const SizedBox(width: 12),
+          //         Expanded(
+          //           child: Obx(
+          //             () => Row(
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               children: [
+          //                 GestureDetector(
+          //                   onTap: () => controller.selectMonth(false),
+          //                   child: HugeIcon(icon: HugeIcons.strokeRoundedArrowLeft01),
+          //                 ),
+          //                 Text(
+          //                   DateFormat('MM/yyyy').format(controller.currentMonth.value),
+          //                   style: AppTypography.body(),
+          //                 ),
+          //                 GestureDetector(
+          //                   onTap: () => controller.selectMonth(true),
+          //                   child: HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
           SliverToBoxAdapter(
             child: Divider(
@@ -137,27 +133,18 @@ class AttendancePage extends StatelessWidget {
           ),
 
           /// Calendar + legend + detail
-          SliverFillRemaining(
+          SliverToBoxAdapter(
             child: Obx(() {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Column(
                   children: [
-                    Expanded(
-                      child: MonthGridViewComponent(
-                        initialSelectedDay: controller.currentMonth.value,
-                        getStatus: (day) => controller.getDayStatus(day),
-                        onDaySelected: (day) => controller.toggleSelectedDay(day),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _legendItem(AppColors.success, "Đủ giờ"),
-                        _legendItem(AppColors.warning, "Trễ/Sớm"),
-                        _legendItem(AppColors.error, "Thiếu"),
-                      ],
+                    MonthGridViewComponent(
+                      initialSelectedDay: controller.currentMonth.value,
+                      getStatus: (day) => controller.getDayStatus(day),
+                      onDaySelected: (day) => controller.toggleSelectedDay(day),
+                      month: controller.currentMonth.value,
+                      title: "Chọn ngày",
                     ),
                     const SizedBox(height: 8),
                     Obx(() {
@@ -165,16 +152,6 @@ class AttendancePage extends StatelessWidget {
                       final detail = controller.getDayDetail(controller.selectedDay.value);
                       return AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
-                        transitionBuilder: (child, anim) {
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(0, 0.2),
-                              end: Offset.zero,
-                            ).animate(anim),
-                            child: FadeTransition(
-                                opacity: anim, child: child),
-                          );
-                        },
                         child: visible
                             ? Container(
                                 key: ValueKey(detail),
@@ -185,8 +162,7 @@ class AttendancePage extends StatelessWidget {
                                   color: AppColors.backgroundInput,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: Text(detail,
-                                    style: AppTypography.smallbody()),
+                                child: Text(detail, style: AppTypography.smallbody()),
                               )
                             : const SizedBox.shrink(),
                       );
@@ -198,23 +174,6 @@ class AttendancePage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _legendItem(Color color, String label) {
-    return Row(
-      children: [
-        if (color != Colors.transparent)
-          Container(
-            width: 13.sp,
-            height: 13.sp,
-            decoration:
-                BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-        if (color == Colors.transparent) const SizedBox(width: 16, height: 16),
-        const SizedBox(width: 6),
-        Text(label, style: AppTypography.smallbody()),
-      ],
     );
   }
 }

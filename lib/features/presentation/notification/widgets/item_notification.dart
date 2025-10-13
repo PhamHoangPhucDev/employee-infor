@@ -17,7 +17,6 @@ class ItemNotification extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextButtonComponent(
               title: title,
@@ -41,21 +40,21 @@ class ItemNotification extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25),
                       borderSide: const BorderSide(
                         color: AppColors.primary,
-                        width: 2,
+                        width: 1,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                       borderSide: const BorderSide(
                         color: AppColors.primary,
-                        width: 2,
+                        width: 1,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                       borderSide: const BorderSide(
                         color: AppColors.primary,
-                        width: 3,
+                        width: 2,
                       ),
                     ),
                   ),

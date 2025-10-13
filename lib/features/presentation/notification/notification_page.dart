@@ -63,14 +63,13 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarComponent(title: AppStrings.notificationTitle,),
+      appBar: AppBarComponent(title: AppStrings.notificationTitle,showBack: false,),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: ListView.builder(
           itemCount: list.length,
           itemBuilder: (context, index) {
             final item = list[index];
-            print(item['listNotification'] as List<Map<String,dynamic>>);
             return ItemNotification(
               title:  item['timeTitle'] as String,
               listNotification: item['listNotification'] as List<Map<String,dynamic>>,

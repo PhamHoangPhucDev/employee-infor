@@ -17,7 +17,7 @@ class AuthController extends GetxController {
     //   final user = await repository.login(email.trim(), password.trim());
     //   if (user != null) {
     //     await authService.saveUser(user);
-        Get.offAllNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.navigation);
     //   } else {
     //     Get.snackbar('Lỗi', 'Email hoặc mật khẩu không đúng');
     //   }
