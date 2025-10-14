@@ -65,7 +65,7 @@ class NotificationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarComponent(title: AppStrings.notificationTitle,showBack: false,),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20),
         child: ListView.builder(
           itemCount: list.length,
           itemBuilder: (context, index) {

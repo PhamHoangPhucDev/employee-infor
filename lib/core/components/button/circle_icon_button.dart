@@ -16,7 +16,7 @@ class CircleIconButton extends StatelessWidget {
     super.key,
     required this.icon,
     this.onPressed,
-    this.iconSize = 16,// mặc định icon 16
+    this.iconSize = 16, // mặc định icon 16
     this.sizeCircle,
     this.backgroundColor = AppColors.backgroundInput,
     this.iconColor = AppColors.text,
@@ -24,25 +24,27 @@ class CircleIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double circleSize = sizeCircle ?? iconSize.sp + 13.sp;
+
     return SizedBox(
-      width: sizeCircle ?? iconSize.sp + 13.sp,
-      height: sizeCircle ?? iconSize.sp + 13.sp,
-      child: TextButton(
-        onPressed: onPressed??(){},
-        style: TextButton.styleFrom(
-          backgroundColor: backgroundColor,
-          shape: const CircleBorder(),
-          padding: EdgeInsets.zero, // bỏ padding mặc định
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            HugeIcon(
+      width: circleSize,
+      height: circleSize,
+      child: ClipOval( //cắt gọn vùng tròn, tránh overflow lẻ pixel
+        child: TextButton(
+          onPressed: onPressed ?? () {},
+          style: TextButton.styleFrom(
+            backgroundColor: backgroundColor,
+            shape: const CircleBorder(),
+            padding: EdgeInsets.zero, // bỏ padding mặc định
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap, // tránh vùng nhấn dư
+          ),
+          child: Center( //đảm bảo icon luôn nằm giữa, không cần Column
+            child: HugeIcon(
               icon: icon,
               size: iconSize.sp,
               color: iconColor,
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -24,8 +24,8 @@ class AppStrings {
   static const String newPasswordLabel = "Mật khẩu mới";
   static const String confirmPasswordLabel = "Xác nhận mật khẩu";
 
-  static const String employeesTitle = "Danh Sách Nhân Viên";
-  static const String infoEmployeeTitle = "Thông Tin Nhân Viên";
+  static const String employeesTitle = "Thông Tin Nhân Viên";
+  static const String infoEmployeeTitle = "Chi Tiết Nhân Viên";
 
   static const String attendanceTitle = "Chấm Công";
 

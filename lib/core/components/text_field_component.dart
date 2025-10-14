@@ -5,12 +5,13 @@ import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 
 class TextFieldComponent extends StatefulWidget {
-  TextFieldComponent({super.key,required this.label,required this.controller,this.hintText="Nhập giá trị",this.isPassword = false,this.maxLines});
+  TextFieldComponent({super.key,required this.label,required this.controller,this.hintText="Nhập giá trị",this.isPassword = false,this.maxLines,this.validator,});
   final String label;
   final String hintText;
   final TextEditingController controller;
   final bool isPassword;
   final int? maxLines;
+  final String? Function(String?)? validator;
 
   @override
   State<TextFieldComponent> createState() => _TextFieldComponentState();
@@ -32,7 +33,7 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
       children: [
         Text(widget.label,style: AppTypography.body()),
         SizedBox(height: 8,),
-        TextField(
+        TextFormField(
           controller: widget.controller,
           obscureText: widget.isPassword ? _obscureText : false,
           style: AppTypography.body(color: AppColors.primary),
@@ -51,6 +52,7 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
                 color: AppColors.border,
               ),
             ),
+            errorStyle: AppTypography.smallbody(color: AppColors.error),
             suffixIcon: widget.isPassword?IconButton(
               onPressed: (){
                 setState(() {
@@ -66,6 +68,8 @@ class _TextFieldComponentState extends State<TextFieldComponent> {
             fillColor: AppColors.backgroundInput,
           ),
           maxLines: widget.isPassword ? 1 : widget.maxLines,
+          validator: widget.validator,
+          autovalidateMode: AutovalidateMode.onUserInteraction,//Khi user bắt đầu nhập hoặc thay đổi nội dung, validator sẽ tự chạy.
         ),  
       ],
     );

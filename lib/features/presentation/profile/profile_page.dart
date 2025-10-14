@@ -6,6 +6,7 @@ import '../../../core/components/appBar_component.dart';
 import '../../../core/components/button/text_button_component.dart';
 import '../../../core/components/text_field_component.dart';
 import '../../../core/components/button/circle_icon_button.dart';
+import '../../../core/constants/app_padding_bottom.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
@@ -95,12 +96,9 @@ class ProfilePage extends StatelessWidget {
                     label: 'Ngày sinh',
                   ),
 
-                  /// Đẩy nút xuống đáy
-                  const Spacer(),
-
                   /// Nút cập nhật
                   Padding(
-                    padding: EdgeInsets.only(bottom: 3.h),
+                    padding: EdgeInsets.only(top: 20),
                     child: TextButtonComponent(
                       title: "Cập nhật",
                       color: AppColors.primary,
@@ -111,7 +109,6 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-
 
         ],
       ),

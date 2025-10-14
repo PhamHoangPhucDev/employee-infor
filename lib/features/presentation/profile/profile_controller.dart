@@ -11,6 +11,6 @@ class ProfileController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController birthController = TextEditingController();
 
-  String get name => authService.user?.name ?? '';
+  String get name => authService.user?.fullname ?? '';
   String get email => authService.user?.email ?? '';
 }

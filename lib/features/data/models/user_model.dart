@@ -6,9 +6,12 @@ class UserModel extends User {
   final String? exp;
   final String? yearsOfService;
   UserModel({
-    required super.id,
-    required super.name,
+    super.id,
+    required super.fullname,
     required super.email,
+    required super.birthday,
+    required super.mobile,
+    required super.password,
     this.exp,
     this.gender,
     this.role,
@@ -19,8 +22,11 @@ class UserModel extends User {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id']?.toString() ?? '',
-      name: json['name'] ?? '',
+      fullname: json['fullname'] ?? '',
       email: json['email'] ?? '',
+      mobile: json['mobile'] ?? '',
+      birthday: json['birthday'] ?? '',
+      password: json['password'] ?? '',
       token: json['token'],
     );
   }

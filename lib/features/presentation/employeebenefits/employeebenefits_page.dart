@@ -14,11 +14,14 @@ class EmployeebenefitsPage extends StatelessWidget {
   UserModel user = UserModel(
     id: "1",
     email: "abc@gmail.com",
-    name: "Nguyễn Văn A",
+    fullname: "Nguyễn Văn A",
     exp: "10 Năm",
     gender: "Nam",
     role: "Senior",
-    yearsOfService: "2 Năm"
+    yearsOfService: "2 Năm",
+    birthday: "10/10/2022",
+    mobile: "0999999999",
+    password: "123456"
   );
 
   @override
@@ -33,7 +36,7 @@ class EmployeebenefitsPage extends StatelessWidget {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  Text(user.name,style: AppTypography.subtitle(color: AppColors.primary),),
+                  Text(user.fullname,style: AppTypography.subtitle(color: AppColors.primary),),
                   Divider(color: AppColors.backgroundInput,),
                 ],
               ),
