@@ -46,8 +46,6 @@ class _HomePageState extends State<HomePage> {
               functionItems: functionItems, // danh sách icon
             ),
           ),
-
-
         
           // Lịch trình
           SliverToBoxAdapter(
@@ -98,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                             //1 - 10 item List.generate/ >20 ListView.builder
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(10, (index) {
+                              children: List.generate(3, (index) {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

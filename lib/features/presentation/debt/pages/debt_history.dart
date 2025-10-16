@@ -36,11 +36,8 @@ class DebtHistoryPage extends StatelessWidget {
               context: context,
               title: "Lọc Danh Sách",
               type: DialogType.bottomSheet,
-              showCancel: true,
               confirmText: "Áp dụng",
-              cancelText: "Hủy",
               confirmColor: AppColors.primary,
-              cancelColor: AppColors.background,
               fields: [
                 labelFilterButton(
                   "Loại",

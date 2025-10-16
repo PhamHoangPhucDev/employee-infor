@@ -78,28 +78,17 @@ class _LeaveFormState extends State<LeaveForm> {
               const SizedBox(height: 16),
 
               /// Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButtonComponent(
-                    onPressed: widget.controller.backToMonth,
-                    title: "Quay lại tháng",
-                    color: AppColors.background,
-                  ),
-                  TextButtonComponent(
-                    onPressed: () {
-                      Get.snackbar(
-                        "Thành công",
-                        "Bạn đã xin nghỉ: ${widget.controller.leaveType.value}"
-                            "${widget.controller.leaveType.value == "Theo giờ"
-                                ? " (${widget.controller.startTime.value.format(context)} - ${widget.controller.endTime.value.format(context)})"
-                                : ""}",
-                      );
-                    },
-                    title: "Gửi",
-                    width: 20.w,
-                  ),
-                ],
+              TextButtonComponent(
+                onPressed: () {
+                  Get.snackbar(
+                    "Thành công",
+                    "Bạn đã xin nghỉ: ${widget.controller.leaveType.value}"
+                        "${widget.controller.leaveType.value == "Theo giờ"
+                            ? " (${widget.controller.startTime.value.format(context)} - ${widget.controller.endTime.value.format(context)})"
+                            : ""}",
+                  );
+                },
+                title: "Gửi",
               ),
             ]),
           ),

@@ -14,7 +14,7 @@ class HeaderSection extends StatelessWidget {
       children: [
         // Header Background
         Container(
-          height: 8.h,
+          height: 7.h,
           decoration: BoxDecoration(
             color: AppColors.primary,
             borderRadius: BorderRadius.only(
@@ -64,31 +64,6 @@ class HeaderSection extends StatelessWidget {
                         );
                       },
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  width: 23.sp,
-                  height: 23.sp,
-                  decoration: BoxDecoration(
-                    color: AppColors.background,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.shadow.withValues(alpha: .1),
-                        blurRadius: 8,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Icon(
-                    Icons.add,
-                    size: 20,
-                    color: AppColors.icon,
                   ),
                 ),
               ),

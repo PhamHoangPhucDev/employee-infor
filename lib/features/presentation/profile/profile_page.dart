@@ -55,11 +55,11 @@ class ProfilePage extends StatelessWidget {
                       child: const Icon(Icons.person),
                     ),
                     title: Text(
-                      controller.name,
+                      "Nguyen Van A",
                       style: AppTypography.body(color: AppColors.textLight),
                     ),
                     subtitle: Text(
-                      controller.email,
+                      "abc@gmail.com",
                       style: AppTypography.smallbody(color: AppColors.textLight),
                     ),
                   ),

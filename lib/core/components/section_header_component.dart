@@ -24,6 +24,7 @@ class SectionHeaderComponent extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Text(
                 title,
@@ -31,7 +32,8 @@ class SectionHeaderComponent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: onActionPressed,
-                child: trading??SizedBox.shrink(),
+                behavior: HitTestBehavior.translucent,
+                child: trading ?? const SizedBox.shrink(),
               ),
             ],
           ),

@@ -18,24 +18,27 @@ class LeaveHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        HorizontalCalendarComponent(
-          events: {
-            "2025-09-10": AttendanceStatus.full,
-            "2025-09-15": AttendanceStatus.missing,
-            "2025-09-22": AttendanceStatus.lateOrEarly,
-          },
-          isSelectedDay: controller.selectedDay.value,
-          iconColor: AppColors.primary,
-          title: "Chọn ngày nghỉ",
-          onDateSelected: (day) {
-            controller.selectedDay.value = day;
-          },
-        ),
-        Expanded(child: LeaveForm(controller: controller)),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          HorizontalCalendarComponent(
+            events: {
+              "2025-09-10": AttendanceStatus.full,
+              "2025-09-15": AttendanceStatus.missing,
+              "2025-09-22": AttendanceStatus.lateOrEarly,
+            },
+            isSelectedDay: controller.selectedDay.value,
+            iconColor: AppColors.primary,
+            title: "Chọn ngày nghỉ",
+            onDateSelected: (day) {
+              controller.selectedDay.value = day;
+            },
+          ),
+          Expanded(child: LeaveForm(controller: controller)),
+        ],
+      ),
     );
   }
 }

@@ -24,7 +24,7 @@ class LeaveMonthGrid extends StatelessWidget {
                 "2025-10-15": AttendanceStatus.missing,
                 "2025-10-22": AttendanceStatus.lateOrEarly,
               },
-              month: DateTime(2025, 10),
+              month: DateTime.now(),
               title: "Chọn ngày muốn nghỉ",
               notesDot: ["Đã duyệt","Đang duyệt","Từ chối"],
               onDaySelected: (day) {

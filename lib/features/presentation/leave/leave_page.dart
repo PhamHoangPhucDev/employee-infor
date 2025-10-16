@@ -5,8 +5,8 @@ import '../../../core/components/appBar_component.dart';
 import '../../../core/constants/app_strings.dart';
 import '../attendance/attendance_controller.dart';
 import 'leave_controller.dart';
-import 'widgets/leave_month_grid.dart';
-import 'widgets/leave_horizontal.dart';
+import 'page/leave_month_grid.dart';
+import 'page/leave_horizontal.dart';
 
 class LeavePage extends StatelessWidget {
   const LeavePage({Key? key}) : super(key: key);
@@ -21,7 +21,16 @@ class LeavePage extends StatelessWidget {
     Get.put(AttendanceController()).mockData();
 
     return Scaffold(
-      appBar: AppBarComponent(title: AppStrings.leaveTitle),
+      appBar: AppBarComponent(
+        title: AppStrings.leaveTitle,
+        onBack: () {
+          if (!controller.showMonthView.value) {
+            controller.backToMonth();
+          } else {
+            Get.back();
+          }
+        },
+      ),
       body: Obx(() {
         // targetHeight: bạn có thể tinh chỉnh theo thiết kế
         final double targetHeight = controller.showMonthView.value ? 90.h : 100.h;

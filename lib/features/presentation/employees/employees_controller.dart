@@ -1,31 +1,45 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EmployeesController extends GetxController {
-  var scrollOffset = 0.0.obs;
-  var selectedTabIndex = 0.obs;
+import 'pages/about_section.dart';
+import 'pages/edu_certifications_section.dart';
+import 'pages/exp_projects_section.dart';
+import 'pages/skills_languages_section.dart';
 
-  void updateScroll(double offset) {
-    scrollOffset.value = offset;
+class EmployeesController extends GetxController with GetSingleTickerProviderStateMixin {
+  late TabController tabController;
+  var currentTabIndex = 0.obs;
+  final ScrollController scrollController = ScrollController();
+
+  final List<String> tabs = [
+    'Giới thiệu',
+    'Kinh nghiệm & Dự án',
+    'Học vấn & Chứng nhận',
+    'Kỹ năng & Ngôn ngữ',
+  ];
+  final List<Widget> tabViews = [
+    AboutSection(),
+    ExpProjectsSection(),
+    EduCertificationsSection(),
+    SkillsLanguagesSection(),
+  ];
+  @override
+  void onInit() {
+    super.onInit();
+    tabController = TabController(length: tabs.length, vsync: this);
+    tabController.addListener(() {
+      currentTabIndex.value = tabController.index;
+    });
+    //Theo dõi cuộn
+    // scrollController.addListener(() {
+    //   print("Current scroll offset: ${scrollController.offset}");
+    // });
   }
 
-  void selectTab(int index) {
-    selectedTabIndex.value = index;
+   @override
+  void onClose() {
+    super.onClose();
+    tabController.dispose();
+    scrollController.dispose();
   }
-      //banner
-
-      //header avatar + tên + chức vụ + t.phố cư trú
-
-      //Giới thiệu
-
-      //Kinh nghiệm
-
-      //Học vấn
-
-      //Giấy phép & chứng nhận
-
-      //Dự án
-
-      //Kỹ năng
-
-      //Ngôn ngữ
 }

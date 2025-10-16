@@ -1,11 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 import '../theme/app_colors.dart';
 
 class FeatureCardBase extends StatelessWidget {
-  final IconData backgroundIcon;
+  final IconData? backgroundIcon;
   final double? sizeIcon;
   final Widget child;
   final Color color;
@@ -17,7 +16,7 @@ class FeatureCardBase extends StatelessWidget {
 
   const FeatureCardBase({
     super.key,
-    required this.backgroundIcon,
+    this.backgroundIcon,
     required this.child,
     this.color = AppColors.primary,
     this.rotation = -pi / 12,

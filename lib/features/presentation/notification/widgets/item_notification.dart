@@ -3,6 +3,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/components/button/text_button_component.dart';
+import '../../../../core/components/section_header_component.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
@@ -16,61 +17,32 @@ class ItemNotification extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            TextButtonComponent(
-              title: title,
-              color: title == "Hôm nay"?AppColors.primary:AppColors.background,
-            ),
-            if(title == "Hôm nay")...[
-              SizedBox(width: 10,),
-              SizedBox(
-                width: 40.w,
-                height: 5.h,
-                child: TextField(
-                  style: AppTypography.button(color: AppColors.primary),
-                  decoration: InputDecoration(
-                    hintText: "Tìm kiếm...",
-                    hintStyle: AppTypography.body(color: AppColors.primary),
-                    filled: true,
-                    fillColor: AppColors.background,
-                    prefixIcon: Icon(Icons.search, color: AppColors.primary),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: const BorderSide(
+        SizedBox(
+          width: double.infinity,
+          child: SectionHeaderComponent(
+            title: title,
+            trading: Row(
+              mainAxisSize: MainAxisSize.min, // 👈 Quan trọng để Row co theo nội dung
+              children: [
+                if (title == "Hôm nay") ...[
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      "Tất cả",
+                      textAlign: TextAlign.right,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.smallbody(
                         color: AppColors.primary,
-                        width: 1,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: const BorderSide(
-                        color: AppColors.primary,
-                        width: 1,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: const BorderSide(
-                        color: AppColors.primary,
-                        width: 2,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
-                ),
-              ),
-              
-              Expanded(
-                child: Align(
-                  alignment: AlignmentGeometry.centerRight,
-                  child: Text("Tất cả",style: AppTypography.smallbody(color: AppColors.primary,decoration: TextDecoration.underline),)
-                )
-              ),
-            ]
-          ],
+                ]
+              ],
+            ),
+          ),
         ),
-        Divider(color: AppColors.backgroundInput,),
+
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),

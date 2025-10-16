@@ -11,6 +11,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final bool showBack;
   final List<Widget>? actions;
+  final VoidCallback? onBack;
 
   const AppBarComponent({
     Key? key,
@@ -18,6 +19,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = true,
     this.showBack = true,
     this.actions,
+    this.onBack,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 25.sp,
       leading: showBack
           ? InkWell(
-            onTap: () => Get.back(),
+            onTap: onBack ??() => Get.back(),
             child: HugeIcon(
               icon: HugeIcons.strokeRoundedArrowLeft01,
               color: AppColors.textLight,

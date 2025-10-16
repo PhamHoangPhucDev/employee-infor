@@ -48,7 +48,7 @@ class AppStrings {
 
   static const String debtTitle = "Công Nợ";
 
-  static const String notificationTitle = "Thông báo";
+  static const String notificationTitle = "Thông Báo";
   static const String errorMessage = "Đã xảy ra lỗi. Vui lòng thử lại.";
   static const String loadingMessage = "Đang tải...";
   static const String noDataMessage = "Không có dữ liệu để hiển thị.";

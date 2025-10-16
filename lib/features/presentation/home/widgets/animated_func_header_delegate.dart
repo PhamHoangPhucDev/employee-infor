@@ -83,8 +83,7 @@ class AnimatedFunctionHeaderDelegate extends SliverPersistentHeaderDelegate {
                         sizeCircle: 30,
                         iconColor: AppColors.primary,
                         onPressed: () => showConfirmBottomSheet(
-                          title: "",
-                          message: "Bạn có chắc chắn muốn đăng xuất không?",
+                          title: "Bạn có chắc chắn muốn đăng xuất không?",
                           confirmText: "Xác nhận",
                           onConfirm: () {
                             debugPrint("Đăng xuất thành công");

@@ -44,6 +44,7 @@ dependencies:
   dash_chat_2: ^0.0.21 #chat customer
   flutter_dotenv: ^5.1.0 #ẩn key AI chatbox
   shimmer: ^3.0.0 #ánh sáng chạy động ở disabled/màn hình chờ
+  timelines_plus: ^1.0.7 #hiển thị thông tin nhân viên dạng timeline
 
 dev_dependencies:
   flutter_test:

@@ -56,7 +56,7 @@ class _HelpcenterPageState extends State<HelpcenterPage>  with TickerProviderSta
                   child: OutlineTabBar(
                     controller: mainTabController,
                     tabs: listTab,
-                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                    isOutlined: false,
                   ),
                 ),
               ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/components/button/text_button_component.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import 'button/circle_icon_button.dart';
 
 /// Loại hiển thị: bottom sheet hoặc alert dialog
 enum DialogType { bottomSheet, alertDialog }
@@ -15,10 +17,10 @@ class AppDialogComponent {
     required List<Widget> fields,
     required VoidCallback onConfirm,
     String confirmText = "Xác nhận",
-    String cancelText = "Hủy",
-    bool showCancel = false,
+    String removeText = "Hủy",
+    bool showRemove = false,
     Color confirmColor = AppColors.primary,
-    Color cancelColor = AppColors.backgroundInput,
+    Color removeColor = AppColors.backgroundInput,
     DialogType type = DialogType.bottomSheet,
   }) async {
     if (type == DialogType.bottomSheet) {
@@ -49,10 +51,10 @@ class AppDialogComponent {
                     fields: fields,
                     onConfirm: onConfirm,
                     confirmText: confirmText,
-                    cancelText: cancelText,
-                    showCancel: showCancel,
+                    removeText: removeText,
+                    showRemove: showRemove,
                     confirmColor: confirmColor,
-                    cancelColor: cancelColor,
+                    removeColor: removeColor,
                   ),
                 ),
               ),
@@ -76,21 +78,24 @@ class AppDialogComponent {
         transitionDuration: const Duration(milliseconds: 250),
         pageBuilder: (_, __, ___) {
           return FadeScaleDialog(
-            child: Center(
-              child: Material(
-                color: AppColors.background,
-                borderRadius: BorderRadius.circular(16),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: _DialogContent(
-                    title: title,
-                    fields: fields,
-                    onConfirm: onConfirm,
-                    confirmText: confirmText,
-                    cancelText: cancelText,
-                    showCancel: showCancel,
-                    confirmColor: confirmColor,
-                    cancelColor: cancelColor,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+              child: Center(
+                child: Material(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: _DialogContent(
+                      title: title,
+                      fields: fields,
+                      onConfirm: onConfirm,
+                      confirmText: confirmText,
+                      removeText: removeText,
+                      showRemove: showRemove,
+                      confirmColor: confirmColor,
+                      removeColor: removeColor,
+                    ),
                   ),
                 ),
               ),
@@ -108,20 +113,20 @@ class _DialogContent extends StatelessWidget {
   final List<Widget> fields;
   final VoidCallback onConfirm;
   final String confirmText;
-  final String cancelText;
-  final bool showCancel;
+  final String removeText;
+  final bool showRemove;
   final Color confirmColor;
-  final Color cancelColor;
+  final Color removeColor;
 
   const _DialogContent({
     required this.title,
     required this.fields,
     required this.onConfirm,
     required this.confirmText,
-    required this.cancelText,
-    required this.showCancel,
+    required this.removeText,
+    required this.showRemove,
     required this.confirmColor,
-    required this.cancelColor,
+    required this.removeColor,
   });
 
   @override
@@ -130,21 +135,43 @@ class _DialogContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(child: Text(title, style: AppTypography.subtitle(),)),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            // Tiêu đề căn giữa
+            Center(
+              child: Text(
+                title,
+                style: AppTypography.subtitle(),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Positioned(
+              right: 0,
+              child: CircleIconButton(
+                icon: HugeIcons.strokeRoundedCancel01,
+                iconSize: 16.sp,
+                iconColor: AppColors.background.withValues(alpha: 0.8),
+                backgroundColor: AppColors.primaryRed.withValues(alpha: 0.9),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+          ],
+        ),
         Divider(color: AppColors.disabled,),
         ...fields,
         SizedBox(height: 3.h),
         Row(
           children: [
-            if (showCancel)
+            if (showRemove)
               Expanded(
                 child: TextButtonComponent(
-                  title: cancelText,
-                  color: cancelColor,
+                  title: removeText,
+                  color: removeColor,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
-            if (showCancel) const SizedBox(width: 8),
+            if (showRemove) const SizedBox(width: 8),
             Expanded(
               child: TextButtonComponent(
                 title: confirmText,

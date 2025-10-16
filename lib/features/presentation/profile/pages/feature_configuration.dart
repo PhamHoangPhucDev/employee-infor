@@ -63,8 +63,7 @@ class FeatureConfigurationScreen extends StatelessWidget {
         "icon": HugeIcons.strokeRoundedLogout02,
         "func": () async {
           showConfirmBottomSheet(
-            title: "",
-            message: "Bạn có chắc chắn muốn đăng xuất không?",
+            title: "Bạn có chắc chắn muốn đăng xuất không?",
             confirmText: "Xác nhận",
             onConfirm: () {
               // controller.logout();

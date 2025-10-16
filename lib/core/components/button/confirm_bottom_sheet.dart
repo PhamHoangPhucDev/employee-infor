@@ -10,7 +10,7 @@ import 'text_button_component.dart';
 class ConfirmBottomSheet extends StatelessWidget {
   final List<List<dynamic>>? icon;
   final String title;
-  final String message;
+  final String? message;
   final String cancelText;
   final String confirmText;
   final Color confirmColor;
@@ -19,7 +19,7 @@ class ConfirmBottomSheet extends StatelessWidget {
   const ConfirmBottomSheet({
     Key? key,
     required this.title,
-    required this.message,
+    this.message,
     this.cancelText = "Hủy",
     this.confirmText = "Xác nhận",
     this.confirmColor = AppColors.primary,
@@ -42,13 +42,15 @@ class ConfirmBottomSheet extends StatelessWidget {
               title,
               style: AppTypography.body(),
             ),
-            SizedBox(height: 8),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: AppTypography.smallbody(),
-            ),
-            SizedBox(height: 20),
+            if (message!=null) ...[
+              SizedBox(height: 8),
+              Text(
+                message??"",
+                textAlign: TextAlign.center,
+                style: AppTypography.smallbody(),
+              ),
+            ],
+            SizedBox(height: 15),
             Row(
               children: [
                 Expanded(
@@ -80,7 +82,7 @@ class ConfirmBottomSheet extends StatelessWidget {
 
 Future<void> showConfirmBottomSheet({
   required String title,
-  required String message,
+  String? message,
   required VoidCallback onConfirm,
   String cancelText = "Hủy",
   String confirmText = "Xác nhận",

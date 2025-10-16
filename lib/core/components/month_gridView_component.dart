@@ -242,18 +242,18 @@ class _MonthGridViewComponentState extends State<MonthGridViewComponent> {
       children: [
         GestureDetector(
           onTap: () => _changeMonth(-1),
-          child: const HugeIcon(icon: HugeIcons.strokeRoundedArrowLeft01),
+          child: const HugeIcon(icon: HugeIcons.strokeRoundedArrowLeft01,color: AppColors.primary),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             DateFormat('MM/yyyy').format(currentMonth),
-            style: AppTypography.body(),
+            style: AppTypography.body(color: AppColors.primary),
           ),
         ),
         GestureDetector(
           onTap: () => _changeMonth(1),
-          child: const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01),
+          child: const HugeIcon(icon: HugeIcons.strokeRoundedArrowRight01,color: AppColors.primary),
         ),
       ],
     );
